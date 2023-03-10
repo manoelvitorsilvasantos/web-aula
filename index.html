@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8">
+		<meta content="viewport=device-width,initial-scale=1.0" name="viewport">
+		<title>Manoel Vitor</title>
+		<style>
+			
+			
+			*{
+				box-sizing:border-box;
+				padding:0;
+				margin:0;
+			}
+			
+			html{
+				height:100%;
+				min-height:100%;
+			}
+			
+			body{
+				display:flex;
+				background:#BB2649;
+				color:black;
+				flex-direction:column;
+				min-height:100%;
+			}
+			
+			header{
+				display:flex;
+				flex-direction:row-reverse;
+				background:black;
+				color:white;
+				width:100%;
+			}
+			
+			header ul{
+				display:flex;
+				padding:8px;
+				flex-row:row;
+			}
+			
+			header li{
+				padding:8px;
+				font-weight:bolder;
+				list-style:none;
+			}
+			
+			header li:hover{
+				color:gray;
+			}
+			
+			footer{
+				background:black;
+				color:white;
+				padding:8px;
+				margin-top:auto;
+				text-align:center;
+				font-weight:bolder;
+			}
+			
+			section{
+				display:flex;
+				flex-direction:column;
+				color:white;
+				padding:8px;
+			}
+			section label{
+				padding:4px;
+				font-weight:bolder;
+			}
+			
+			section input{
+				font-weight:bolder;
+				font-size:14px;
+				text-align:center;
+			}
+			
+			section form{
+				background:white;
+				color:black;
+				width:100%;
+				padding:8px;
+				border-radius:5px;
+				margin:10px auto;
+			}
+			
+			section input[type="text"], input[type="email"], input[type="password"]{
+				padding:4px 0;
+				border-radius:5px;
+				border:1px solid black;
+				width:100%;
+				margin-bottom:4px;
+			}
+			
+			section input[type="button"]{
+				display:flex;
+				flex-direction:row;
+				padding:10px;
+			}			
+			
+		</style>
+	</head>
+	<body onload="init()">
+		<header>
+			<ul>
+				<li>Home</li>
+				<li>Contatos</li>
+				<li>Registro</li>
+				<li>Sobre Mim</li>
+			</ul>
+		</header>
+		<section>
+				<form>
+					<label for="nome">Nome:</label><br>
+					<input type="text" id="nome" name="nome"><br>
+					<label for="email">E-mail:</label><br>
+					<input type="email" id="email" name="email"><br>
+					<label for="senha">Senha:</label><br>
+					<input type="password" id="senha" name="senha"><br>
+					<input type="submit" onclick="enviarDados()">
+				</form>
+			</section>
+			
+			<script>
+				function init(){
+					document.getElementById('nome').addEventListener('keyup', (ev) =>{
+						const input = ev.target;
+						input.value = input.value.toUpperCase();
+					});
+				}
+				
+				
+				function enviarDados(){
+				
+					//url do destino
+					var url = "receptor.php";
+					
+					var data = {
+						nome : document.getElementById("nome"),
+						email: document.getElementById("email"),
+						senha:document.getElementById("senha")
+					};
+					
+					//cria um instancia da 
+					var xhttp = new XMLHttpRequest();
+					
+					xhttp.open("POST", url, true);
+					
+					//xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					
+					xhttp.onreadystatechange = function(){
+						if(xhttp.readyState === 4 &&  xhttp.status === 200){
+							console.log(xhttp.responseText);
+						}
+					}
+					xhttp.setRequestHeader("Content-Type", "application/json");
+					xhttp.send(JSON.stringify(data));
+				}
+				
+			</script>
+		<footer>
+			All Copyrights Right Manoel Vitor
+		</footer>
+	</body>
+</html>
